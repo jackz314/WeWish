@@ -26,6 +26,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 const db = firebase.firestore();
+var user = firebase.auth().currentUser;
 
 const addWish = (name) => {
     
