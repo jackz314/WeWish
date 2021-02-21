@@ -41,12 +41,12 @@ function SelectGroupPanel(props){
             <span className={classes.tag}>Groups</span>
         </div>
         <div>
-            {props.groupList.map(group => (
-                <div className={classes.listItem} onClick={onGroupClick}>
+            {props.groupList.map((group, i) => (
+                <div key={i}  className={classes.listItem} onClick={() => onGroupClick(group.name)}>
                     {group.name}
                     <Typography>Group members: {group.ref.curr_users}</Typography>
                     <Typography>Finished members: {group.ref.finished_users}</Typography>
-                    <Typography>In progress members: {group.ref.in_progress_users}</Typography>
+                    <Typography>In progress members: {group.ref.in_progress_users <= 0 ? 0 : group.ref.in_progress_users}</Typography>
                 </div>
             ))}
         </div>

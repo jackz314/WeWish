@@ -21,23 +21,30 @@ const useStyles = makeStyles({
     listItem: {
         border: '1px solid black',
         borderRadius: 8,
-    }
+    },
 })
 
 function GroupPostPanel(props){
     const classes = useStyles();
 
-    console.log(props.groupPosts)
     return (
     <div className={classes.root}>
         <div style={{marginBottom: 8}}>
             <span className={classes.tag}>Group Post</span>
         </div>
         <div>
-            {/* {props.postList.map(post => (
-                <div className={classes.listItem}>
+            {props.groupPosts.map((post,i) => (
+                <div key={i} className={classes.listItem}>
+                    <div  style={{cursor: 'pointer'}} >
+                    <img 
+                          src={post.profile_pic}
+                          alt="new"
+                          style={{height: '40px', borderRadius: '50%'}}
+                          />
+                </div>  
+                    {post.text}
                 </div>
-            ))} */}
+            ))}
         </div>
     </div>
     )

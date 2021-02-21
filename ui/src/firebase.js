@@ -168,10 +168,10 @@ function getPostObjects(post) {
  */
 export const getPosts = async (wish) => {
   await waitForUser();
-  console.log("getPosts")
+  //console.log("getPosts")
   const post = await wishColl.doc(wish).collection('posts').orderBy('time').get();
   const post_list = getPostObjects(post);
-  console.log(post_list)
+  //console.log(post_list)
   return post_list
 }
 

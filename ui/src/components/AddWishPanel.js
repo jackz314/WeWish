@@ -52,6 +52,7 @@ function AddWishPanel(){
 
     const onSubmitButtonClick = async () => {
         await addWish(wishName, "edit me!", wishLevel);
+        setWishName('')
     }
 
 

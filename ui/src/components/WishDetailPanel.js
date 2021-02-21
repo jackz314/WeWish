@@ -40,6 +40,7 @@ function WishDetailPanel(props){
 
     const onDropButtonClick = async() => {
         await delWish(wish.name);
+        props.setTargetWish("")
     }
 
     const onJoinButtonClick = async() => {
@@ -88,6 +89,7 @@ function WishDetailPanel(props){
                     size="small"
                     color="primary"
                     onClick={onFinishButtonClick}
+                    disabled={wish.complete_time != null}
                 >
                     Accomplish
                 </Button>
@@ -97,6 +99,7 @@ function WishDetailPanel(props){
                     color="primary"
                     onClick={onDropButtonClick}
                     style={{marginLeft: 40}}
+                    disabled={wish.complete_time != null}
                 >
                     Drop
                 </Button>

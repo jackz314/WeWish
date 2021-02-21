@@ -23,10 +23,14 @@ function Groups() {
 
     useEffect(() => {
       async function getPostList(){
-        let res = await getPosts();
+        let res = await getPosts(targetGroup);
         setGroupPosts(res)
+        console.log(res)
       }
-      getPostList();
+      if(targetGroup !== ""){
+        getPostList();
+      }
+        
     }, [targetGroup])
 
   return (
@@ -34,8 +38,8 @@ function Groups() {
     <div>
       <AddWishPanel/>
       <div style={{display: 'flex', flexDirection: 'row'}}>
-        <SelectGroupPanel groupList={groupList} setTargetGroup={setTargetGroup}/>
-        <GroupPostPanel groupPosts={groupPosts}/>
+        <SelectGroupPanel groupList={groupList} setTargetGroup={setTargetGroup} targetGroup={targetGroup}/>
+        <GroupPostPanel groupPosts={groupPosts} targetGroup={targetGroup}/>
       </div>
     </div>
   </Navigation>
