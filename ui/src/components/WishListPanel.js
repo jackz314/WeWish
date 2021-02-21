@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import SyncIcon from '@material-ui/icons/Sync';
 import { Button, Typography } from '@material-ui/core';
 import  { getWishes }from '../firebase'
 
@@ -36,15 +38,6 @@ function WishListPanel(){
         getList()  
     }
     ,[])
-
-    console.table(wishList)
-    var wishlist = [];
-    wishList.map(wish => {
-        if (wish.joined == true) var joined = "Joined" 
-        else var joined = "Not Joined"
-        wishlist.push({"name": wish.name, "difficulty": wish.difficulty, "joined": joined, 
-                    "desc": wish.desc, "start_time": String(wish.start_time).slice(4,24)})
-    })
     return (
     <div className={classes.root}>
         <div style={{marginBottom: 8}}>
@@ -53,6 +46,10 @@ function WishListPanel(){
         <div>
             {wishlist.map(wish => (
                 <div className={classes.listItem}>
+                    <div style={{display:'flex', alignItems: 'center', marginTop: 8, marginBottom: 8}}>
+                        <Typography variant="h5">{wish.name}</Typography>
+                        {wish.completed_time == null ? <SyncIcon style={{color: '#0384fc'}}/> : <CheckCircleIcon style={{color: '##11ba5a'}}/>}
+                    </div>
                     {wish.name}
                     {wish.difficulty}
                     {wish.desc}

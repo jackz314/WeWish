@@ -11,12 +11,8 @@ function Dashboard() {
       <div>
         <AddWishPanel/>
         <div style={{display: 'flex', flexDirection: 'row'}}>
-          <div style={{flex: 1}}>
             <WishListPanel/>
-          </div>
-          <div style={{flex: 1}}>
             <GroupListPanel/>
-          </div>
         </div>
       </div>
     </Navigation>
