@@ -148,16 +148,15 @@ export const addCompletedPost = async (wish) => {
   })
 }
 
-function getPostObjects(post) {
-  const post_list = [];
-  post.forEach(async x => {
+async function getPostObjects(post) {
+  const post_list = await Promise.all(post.docs.map(async x => {
     var time = x.get("time").toDate()
     var text = x.get("text")
     var usrRef = await x.get("user").get()
     var name = usrRef.get("name")
     var profile_pic = usrRef.get("profile_pic")
-    post_list.unshift({"time": time, "text": text, "name": name, "profile_pic": profile_pic})
-  })
+    return{"time": time, "text": text, "name": name, "profile_pic": profile_pic}
+  }))
   return post_list;
 }
 
