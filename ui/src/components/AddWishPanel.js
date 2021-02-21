@@ -91,7 +91,7 @@ function AddWishPanel(){
             <Typography variant="caption">Hard</Typography>                 
             </div>
         </div>
-        <div className={classes.inputContainer} style={{marginBottom: 8}}>
+        <div className={classes.inputContainer} style={{flexDirection: 'row-reverse', marginRight: 8, marginBottom: 8}}>
             <Button 
                 variant="contained"
                 size="small" 
