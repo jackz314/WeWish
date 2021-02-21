@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import SyncIcon from '@material-ui/icons/Sync';
 import { Typography } from '@material-ui/core';
-import  { getWishes }from '../firebase'
+import  { getWishes, setWishesChangeListener }from '../firebase'
 
 const useStyles = makeStyles({
     root: {
@@ -46,8 +46,11 @@ function WishListPanel(){
             setWishList(response)
         }
         getList()
+
+        setWishesChangeListener(list=> setWishList(list))
     }
     ,[])
+
 
     return (
     <div className={classes.root}>
