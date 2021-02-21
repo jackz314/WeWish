@@ -101,16 +101,6 @@ function Navigation(props){
                             Groups
                         </Typography>
                     </ListItem>
-                    <ListItem
-                        className={classes.sidebarListItem}
-                        component={Link}
-                        to="/login"
-                        onClick={() => firebase.auth().signOut()}
-                    >
-                        <Typography variant="h6" style={{color: 'white'}}>
-                            Log Out
-                        </Typography>
-                    </ListItem>
                 </div>
             </div>
         );
