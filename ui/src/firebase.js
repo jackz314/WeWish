@@ -49,7 +49,7 @@ if(user === null){
 const getUserWishRef = name => userColl.doc(user.uid).collection('wishes').doc(name);
 
 export const addWish = async(name, description, difficulty) => {
-  console.log("Adding wish...", name);
+  console.log("Adding wish...", name, description, difficulty);
   await funcs.httpsCallable("addWish")({
     name: name, desc: description, difficulty: difficulty
   });
@@ -149,6 +149,18 @@ export const recommendWishes = async (input) => {
   })
   return recommendation
 }
+
+export const setWishesChangeListener = async(listener) => {
+  userColl.doc(user.uid).collection("wishes").onSnapshot(async (snapshot) => {
+    listener(await getWishObjects(snapshot));
+  });
+};
+
+export const setJoinedWishesChangeListener = async(listener) => {
+  userColl.doc(user.uid).collection("wishes").where('joined', '==', true).onSnapshot(async (snapshot) => {
+    listener(await getWishObjects(snapshot));
+  });
+};
 
 async function getWishObjects(snapshot) {
   let documentData = await Promise.all(snapshot.docs.map(async doc => {
