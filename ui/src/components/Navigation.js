@@ -132,7 +132,7 @@ function Navigation(props){
                     <img 
                           src={user.photoURL}
                           alt="new"
-                          style={{height: '40px'}}
+                          style={{height: '40px',borderRadius: "50%",}}
                           />
                 </div>
             </div>
