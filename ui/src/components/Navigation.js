@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-
+import {useHistory} from 'react-router-dom';
 import { Link } from 'react-router-dom'; 
 import { makeStyles } from '@material-ui/core/styles';
 import { ListItem, Typography } from '@material-ui/core';
@@ -58,6 +58,9 @@ const useStyles = makeStyles({
 function Navigation(props){
     const classes = useStyles();
     const [user, setUser] = useState({});
+
+    const history = useHistory();
+
     useEffect(()=>{
         async function get() {
             let user = await getUser();
@@ -127,12 +130,11 @@ function Navigation(props){
                     }}>
                     {props.title}
                 </Typography>
-                <div className={classes.profilePic}>
-                    
+                <div className={classes.profilePic} style={{cursor: 'pointer'}} onClick={()=> history.push('/profile')}>
                     <img 
                           src={user.photoURL}
                           alt="new"
-                          style={{height: '40px',borderRadius: "50%",}}
+                          style={{height: '40px', borderRadius: '50%'}}
                           />
                 </div>
             </div>

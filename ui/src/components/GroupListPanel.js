@@ -21,6 +21,9 @@ const useStyles = makeStyles({
     listItem: {
         border: '1px solid black',
         borderRadius: 8,
+        padding:8,
+        margin:10,
+        fontSize:24,
     }
 })
 
@@ -37,7 +40,6 @@ function GroupListPanel(){
     }
     ,[])
 
-    console.table(groupList)
     return (
     <div className={classes.root}>
         <div style={{marginBottom: 8}}>
