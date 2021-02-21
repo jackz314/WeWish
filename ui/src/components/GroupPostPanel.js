@@ -34,15 +34,18 @@ function GroupPostPanel(props){
         </div>
         <div>
             {props.groupPosts.map((post,i) => (
-                <div key={i} className={classes.listItem}>
-                    <div  style={{cursor: 'pointer'}} >
+                <div key={i} className={classes.listItem} style={{cursor: 'pointer', marginBottom: 16, padding: 8}}>
+                    <div   style={{display: 'flex'}}>
                     <img 
                           src={post.profile_pic}
                           alt="new"
                           style={{height: '40px', borderRadius: '50%'}}
                           />
-                </div>  
+                    <span style={{marginLeft: 8}}>{post.name}</span>
+                </div >  
+                <div style={{marginTop: 8}}>
                     {post.text}
+                </div>
                 </div>
             ))}
         </div>
