@@ -69,6 +69,7 @@ export const getWishes = async() => {
   const snapshot = await userColl.doc(user.uid).collection("wishes").get();
   let documentData = await Promise.all(snapshot.docs.map(async doc => {
     const data = doc.data();
+    data.name = doc.id;
     data.ref = (await data.ref.get()).data();
     return data;
   }));
@@ -81,6 +82,7 @@ export const getJoinedWishes = async() => {
   const snapshot = await userColl.doc(user.uid).collection("wishes").where('joined', '==', true).get();
   let documentData = await Promise.all(snapshot.docs.map(async doc => {
     const data = doc.data();
+    data.name = doc.id;
     data.ref = (await data.ref.get()).data();
     return data;
   }));
