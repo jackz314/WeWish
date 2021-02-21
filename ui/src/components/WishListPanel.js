@@ -44,7 +44,7 @@ function WishListPanel(){
             <span className={classes.tag}>WishList</span>
         </div>
         <div>
-            {wishlist.map(wish => (
+            {wishList.map(wish => (
                 <div className={classes.listItem}>
                     <div style={{display:'flex', alignItems: 'center', marginTop: 8, marginBottom: 8}}>
                         <Typography variant="h5">{wish.name}</Typography>
