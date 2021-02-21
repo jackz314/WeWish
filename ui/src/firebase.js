@@ -45,7 +45,7 @@ const waitForUser = async() => {
   if(user === null || user.uid === 'sample_user_1'){
     return new Promise((resolve) => {
       firebase.auth().onAuthStateChanged(u => {
-        console.log("auth state changed wait", u ? null : u.uid);
+        console.log("auth state changed wait", u === null ? null : u.uid);
         user = u;
         if(user === null){
           user = {uid: 'sample_user_1'}
@@ -60,7 +60,7 @@ const waitForUser = async() => {
 
 //listen for user changes
 firebase.auth().onAuthStateChanged(u => {
-  console.log("auth state changed", u.uid);
+  console.log("auth state changed", u ? u.uid : null);
   user = u;
   if(user === null){
     user = {uid: 'sample_user_1'}
