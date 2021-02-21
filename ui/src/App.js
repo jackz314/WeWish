@@ -4,8 +4,7 @@ import Dashboard from './components/Dashboard'
 import Wishlist from './components/Wishlist'
 import Groups from './components/Groups'
 import SignInScreen from './firebaseAuth'
-
-
+import Profile from './components/Profile'
 
 function App(){
   return (
@@ -16,6 +15,7 @@ function App(){
           <Route path='/wishlist' component={Wishlist} />
           <Route path='/group' component={Groups} />
           <Route path='/login' component={SignInScreen} />
+          <Route path='/profile' component={Profile}/>
         </Switch>
       </BrowserRouter> 
     </div>

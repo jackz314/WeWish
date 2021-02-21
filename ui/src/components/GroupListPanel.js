@@ -37,7 +37,6 @@ function GroupListPanel(){
     }
     ,[])
 
-    console.table(groupList)
     return (
     <div className={classes.root}>
         <div style={{marginBottom: 8}}>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import SyncIcon from '@material-ui/icons/Sync';
-import { Button, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import  { getWishes }from '../firebase'
 
 const useStyles = makeStyles({

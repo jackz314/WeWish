@@ -32,7 +32,6 @@ function WishDetailPanel(props){
 
     const wish = props.wishList[props.wishList.findIndex(wish => wish.name === props.targetWish)]
 
-    console.log(wish)
 
     const onFinishButtonClick = async() => {
         await finishWish(wish.name);
