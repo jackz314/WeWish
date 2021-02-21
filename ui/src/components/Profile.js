@@ -5,7 +5,12 @@ import Navigation from './Navigation'
 function Profile() {
   return (
     <Navigation title="Profile">
-      <div>profile</div>
+      <div>
+          <div>avatar</div>
+          <div>name</div>
+          <div>Follow</div>
+          <div>Follower: 20</div>
+      </div>
     </Navigation>
   )
 }
