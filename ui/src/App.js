@@ -5,6 +5,7 @@ import Dashboard from './components/Dashboard'
 import Wishlist from './components/Wishlist'
 import Groups from './components/Groups'
 import Explore from './components/Explore'
+import SignInScreen from './firebaseAuth'
 
 class App extends Component {
   render() {
@@ -16,6 +17,7 @@ class App extends Component {
           <Route path='/wishlist' component={Wishlist} />
           <Route path='/groups' component={Groups} />
           <Route path='/explore' component={Explore} />
+          <Route path='/login' component={SignInScreen} />
         </Router>
       </div>
     )
