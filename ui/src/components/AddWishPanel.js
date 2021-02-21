@@ -38,7 +38,7 @@ const useStyles = makeStyles({
 function AddWishPanel(){
     const classes = useStyles();
     const [wishName, setWishName] = useState("");
-    const [wishLevel, setWishLevel] = useState("easy");
+    const [wishLevel, setWishLevel] = useState(1);
 
 
     const onLevelTagClick = (level) => {
@@ -51,8 +51,7 @@ function AddWishPanel(){
     }
 
     const onSubmitButtonClick = async () => {
-        //console.log(`${wishName}, "edit me!", ${wishLevel}`)
-        //await addWish(wishName, "edit me!", wishLevel);
+        await addWish(wishName, "edit me!", wishLevel);
     }
 
 
@@ -73,20 +72,20 @@ function AddWishPanel(){
         <div className={classes.inputContainer} style={{marginBottom: 8}}>
             <Typography variant="subtit1">How difficult is it?</Typography>
             <div className={classes.levelTag} 
-                style={{backgroundColor: wishLevel === 'easy' ? 'rgb(32,171,51)' : 'rgba(32,171,51,0.25)'}}
-                onClick={() => onLevelTagClick('easy')}
+                style={{backgroundColor: wishLevel === 1 ? 'rgb(32,171,51)' : 'rgba(32,171,51,0.25)'}}
+                onClick={() => onLevelTagClick(1)}
             >
                 <Typography variant="caption">Easy</Typography>
             </div>
             <div className={classes.levelTag}
-                style={{backgroundColor: wishLevel === 'medium' ? 'rgb(247,157,22)' : 'rgba(247,157,22,0.25)'}}
-                onClick={() => onLevelTagClick('medium')}
+                style={{backgroundColor: wishLevel === 2 ? 'rgb(247,157,22)' : 'rgba(247,157,22,0.25)'}}
+                onClick={() => onLevelTagClick(2)}
             >
                 <Typography variant="caption">Medium</Typography>
             </div>
             <div className={classes.levelTag}
-                style={{ backgroundColor: wishLevel === 'hard' ? 'rgb(255,10,10)' : 'rgba(255,10,10,0.25)'}}
-                onClick={() => onLevelTagClick('hard')}
+                style={{ backgroundColor: wishLevel === 3 ? 'rgb(255,10,10)' : 'rgba(255,10,10,0.25)'}}
+                onClick={() => onLevelTagClick(3)}
             >
             <Typography variant="caption">Hard</Typography>                 
             </div>
