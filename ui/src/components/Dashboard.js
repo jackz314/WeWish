@@ -1,13 +1,14 @@
-import React, { Component } from 'react'
-import { Link } from "react-router-dom";
-import "./style/Dashboard.css"
+import React from 'react'
 
-class Dashboard extends Component {
-  render() {
-    return (
-    	<div className="wrapper">Dashboard</div>
-    	)
-  }
+import Navigation from './Navigation'
+import AddWishPanel from './AddWishPanel'
+
+function Dashboard() {
+  return (
+    <Navigation title="Home">
+      <div><AddWishPanel></AddWishPanel></div>
+    </Navigation>
+  )
 }
 
-export default Dashboard
+export default Dashboard;

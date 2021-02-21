@@ -1,9 +1,13 @@
-import React, { Component } from 'react'
+import React from 'react';
 
-class Groups extends Component {
-  render() {
-    return <div>Groups</div>
-  }
+import Navigation from './Navigation'
+
+function Groups() {
+  return (
+    <Navigation title="Groups">
+      <div>Groups</div>
+    </Navigation>
+  )
 }
 
-export default Groups
+export default Groups;
