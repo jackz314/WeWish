@@ -11,7 +11,6 @@ class Sidebar extends Component {
         <li><Link to="/">Home</Link></li>
         <li><Link to="/Wishlist">My Wishlists</Link></li>
         <li><Link to="/Groups">My Groups</Link></li>
-        <li><Link to="/Explore">Explore</Link></li>
       </ul>
     </div>
     )

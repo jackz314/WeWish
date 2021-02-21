@@ -14,7 +14,7 @@ class App extends Component {
           <Sidebar />
           <Route exact path='/' component={Dashboard} />
           <Route path='/wishlist' component={Wishlist} />
-          <Route path='/group' component={Groups} />
+          <Route path='/groups' component={Groups} />
           <Route path='/explore' component={Explore} />
         </Router>
       </div>
