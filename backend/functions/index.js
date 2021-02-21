@@ -83,6 +83,16 @@ exports.delWish = functions.https.onCall(async (data, context) => {
   });
 });
 
+exports.joinWish = functions.https.onCall(async (data, context) => {
+  const name = data.name;
+  const batch = db.batch();
+  await batch.update(userColl.doc(context.auth.uid).collection("wishes").doc(name), {joined: true})
+      .update(wishColl.doc(name), {
+        curr_users: admin.firestore.FieldValue.increment(1),
+        in_progress_users: admin.firestore.FieldValue.increment(1),
+      }).commit();
+});
+
 exports.leaveWish = functions.https.onCall(async (data, context) => {
   const name = data.name;
   await db.runTransaction(async (transaction) => {

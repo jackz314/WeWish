@@ -52,6 +52,7 @@ function WishListPanel(){
     ,[])
 
 
+    
     return (
     <div className={classes.root}>
         <div style={{marginBottom: 8}}>

@@ -56,7 +56,7 @@ function WishDetailPanel(props){
             <span className={classes.tag}>Wish</span>
             <div style={{display:'flex', alignItems: 'center', marginTop: 8, marginBottom: 8}}>
                 <Typography variant="h5">{wish.name}</Typography>
-                {wish.completed_time == null ? <SyncIcon style={{color: '#0384fc'}}/> : <CheckCircleIcon style={{color: '##11ba5a'}}/>}
+                {wish.complete_time == null ? <SyncIcon style={{color: '#0384fc'}}/> : <CheckCircleIcon style={{color: '#11ba5a'}}/>}
             </div>
             <div style={{border: '1px solid black', padding: 8, marginBottom: 10}}>
                 <Typography variant="subtitle1" style={{marginBottom: 60}}>{`${wish.name} Group`}</Typography>
