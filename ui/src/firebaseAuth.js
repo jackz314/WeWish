@@ -29,6 +29,12 @@ function SignInScreen() {
 
   const history = useHistory();
 
+  useEffect(()=>{
+    if(isSignedIn){
+      history.push('/');
+    }
+  },[isSignedIn])
+
   if (!isSignedIn) {
     return (
       <div>
@@ -38,13 +44,11 @@ function SignInScreen() {
       </div>
     );
   }
-
-  history.push('/');
   
   return (
     <div>
       <h1>WeWish</h1>
-      <p>Welcome {firebase.auth().currentUser.displayName}! You are now signed-in!</p>
+      <p>Welcome {firebase.auth().currentUser.displayName}! You will be re-directed to the app soon!</p>
       <button onClick={() => firebase.auth().signOut()}>Sign-out</button>
       <button onClick={()=>addWish("AAA", "BBB", 2)}>Add wish</button>
     </div>
