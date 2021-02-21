@@ -1,20 +1,10 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from 'react';
+import SignInStackNavigator from './navigators/SignInStackNavigator'
 
-export default function App() {
+function App() {
   return (
-    <View style={styles.container}>
-      hello world!
-    </View>
+    <SignInStackNavigator/>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
