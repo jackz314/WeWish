@@ -38,15 +38,26 @@ function WishListPanel(){
     ,[])
 
     console.table(wishList)
+    var wishlist = [];
+    wishList.map(wish => {
+        if (wish.joined == true) var joined = "Joined" 
+        else var joined = "Not Joined"
+        wishlist.push({"name": wish.name, "difficulty": wish.difficulty, "joined": joined, 
+                    "desc": wish.desc, "start_time": String(wish.start_time).slice(4,24)})
+    })
     return (
     <div className={classes.root}>
         <div style={{marginBottom: 8}}>
             <span className={classes.tag}>WishList</span>
         </div>
         <div>
-            {wishList.map(wish => (
+            {wishlist.map(wish => (
                 <div className={classes.listItem}>
                     {wish.name}
+                    {wish.difficulty}
+                    {wish.desc}
+                    {wish.start_time}
+                    {wish.joined}
                 </div>
             ))}
         </div>
