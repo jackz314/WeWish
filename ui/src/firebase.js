@@ -87,6 +87,7 @@ export const addWish = async(name, description, difficulty) => {
 };
 
 export const delWish = async(name) => {
+  await waitForUser();
   await funcs.httpsCallable("delWish")({name: name});
 };
 
@@ -129,6 +130,7 @@ export const joinWish = async(name) => {
 
 export const leaveWish = async(name) => {
   await waitForUser();
+  console.log("leaving wish", name);
   await funcs.httpsCallable("leaveWish")({name: name});
 };
 

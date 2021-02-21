@@ -7,7 +7,6 @@ import  { getWishes }from '../firebase'
 
 const useStyles = makeStyles({
     root: {
-        width: '100%',
         marginTop: 16,
         width: '40%',
         padding: 8,
@@ -35,10 +34,10 @@ function WishListPanel(){
             let response = await getWishes();
             setWishList(response)
         }
-        getList()  
+        getList()
     }
     ,[])
-    
+
     return (
     <div className={classes.root}>
         <div style={{marginBottom: 8}}>

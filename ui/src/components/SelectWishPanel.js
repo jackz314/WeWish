@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
     root: {
-        width: '100%',
         marginTop: 16,
         width: '40%',
         padding: 8,
@@ -22,12 +21,13 @@ const useStyles = makeStyles({
         padding:8,
         margin:10,
         fontSize:24,
+        cursor: "pointer"
     }
 })
 
 function SelectWishPanel(props){
     const classes = useStyles();
-   
+
 
     const onWishClick = (name) => {
         props.setTargetWish(name)
@@ -39,11 +39,11 @@ function SelectWishPanel(props){
             <span className={classes.tag}>WishList</span>
         </div>
         <div>
-            {props.wishList.length === 0 ? null : 
+            {props.wishList.length === 0 ? null :
                 props.wishList.map(wish => (
-                    
-                    <div key={wish.name} 
-                        className={classes.listItem} 
+
+                    <div key={wish.name}
+                        className={classes.listItem}
                         onClick={()=>onWishClick(wish.name)}
                     >
                         {wish.name}

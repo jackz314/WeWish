@@ -30,11 +30,11 @@ exports.addWish = functions.https.onCall(async (data, context) => {
       "one arguments \"name\" containing the wish name.");
   }
   // Checking that the user is authenticated.
-  // if (!context.auth) {
-  //   // Throwing an HttpsError so that the client gets the error details.
-  //   throw new functions.https.HttpsError("failed-precondition", "The function must be called " +
-  //     "while authenticated.");
-  // }
+  if (!context.auth) {
+    // Throwing an HttpsError so that the client gets the error details.
+    throw new functions.https.HttpsError("failed-precondition", "The function must be called " +
+      "while authenticated.");
+  }
 
   const wishRef = db.collection("wishes").doc(data.name);
 
@@ -47,7 +47,8 @@ exports.addWish = functions.https.onCall(async (data, context) => {
     });
   }
 
-  const uid = context.auth ? context.auth.uid : "sample_user_1";
+  // const uid = context.auth ? context.auth.uid : "sample_user_1";
+  const uid = context.auth.uid;
   const userWishesColl = db.collection("users").doc(uid).collection("wishes");
   await userWishesColl.doc(data.name).set({
     complete_time: null,
@@ -66,8 +67,8 @@ exports.delWish = functions.https.onCall(async (data, context) => {
     if (!userWishDS.exists) {
       throw new Error("Wish doesn't exist!");
     }
-    const finished = userWishDS.data["complete_time"] !== null;
-    await userColl.doc(context.auth.uid).collection("wishes").doc(name).delete();
+    const finished = userWishDS.get("complete_time");
+    transaction.delete(userColl.doc(context.auth.uid).collection("wishes").doc(name));
     if (finished) {
       transaction.update(wishColl.doc(name), {
         curr_users: admin.firestore.FieldValue.increment(-1),
@@ -78,7 +79,7 @@ exports.delWish = functions.https.onCall(async (data, context) => {
         in_progress_users: admin.firestore.FieldValue.increment(-1),
       });
     }
-    transaction.commit();
+    return userWishDS;
   });
 });
 
@@ -89,8 +90,8 @@ exports.leaveWish = functions.https.onCall(async (data, context) => {
     if (!userWishDS.exists) {
       throw new Error("Wish doesn't exist!");
     }
-    const finished = userWishDS.data["complete_time"] !== null;
-    if (finished) {
+    transaction.update(userColl.doc(context.auth.uid).collection("wishes").doc(name), {joined: false});
+    if (userWishDS.get("complete_time")) {
       transaction.update(wishColl.doc(name), {
         curr_users: admin.firestore.FieldValue.increment(-1),
       });
@@ -100,7 +101,7 @@ exports.leaveWish = functions.https.onCall(async (data, context) => {
         in_progress_users: admin.firestore.FieldValue.increment(-1),
       });
     }
-    transaction.commit();
+    return userWishDS;
   });
 });
 
@@ -108,18 +109,19 @@ exports.finishWish = functions.https.onCall(async (data, context) => {
   const name = data.name;
   await db.runTransaction(async (transaction) => {
     const userWishDS = await transaction.get(userColl.doc(context.auth.uid).collection("wishes").doc(name));
+    console.log(userWishDS);
     if (!userWishDS.exists) {
-      throw new Error("Wish doesn't exist!");
+      throw new Error(`Wish doesn't exist! ${context.auth.uid}`);
     }
-    const finished = userWishDS.data["complete_time"] !== null;
-    if (finished) {
+    if (userWishDS.get("complete_time")) {
       throw new functions.https.HttpsError("failed-precondition", "Wish already finished!");
     } else {
+      transaction.update(userColl.doc(context.auth.uid).collection("wishes").doc(name), {complete_time: admin.firestore.FieldValue.serverTimestamp()});
       transaction.update(wishColl.doc(name), {
         finished_users: admin.firestore.FieldValue.increment(1),
         in_progress_users: admin.firestore.FieldValue.increment(-1),
       });
     }
-    transaction.commit();
+    return userWishDS;
   });
 });

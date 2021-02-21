@@ -8,7 +8,6 @@ import  { joinWish, finishWish, leaveWish, delWish, addCompletedPost }from '../f
 
 const useStyles = makeStyles({
     root: {
-        width: '100%',
         marginTop: 16,
         marginLeft: 16,
         width: '40%',
@@ -64,18 +63,18 @@ function WishDetailPanel(props){
                 <Typography variant="subtitle1" style={{marginBottom: 60}}>{`${wish.name} Group`}</Typography>
                 <Typography variant="subtitle1" style={{marginBottom: 60}}>{`People in this group also wish to accomplish the goal of ${wish.name}.`}</Typography>
                 <div style={{display: 'flex', flexDirection: 'row-reverse'}}>
-                    {wish.joined ? 
+                    {wish.joined ?
                         <Button
                         variant="contained"
-                        size="small" 
+                        size="small"
                         color="primary"
                         onClick={onLeaveButtonClick}
                     >
                         Leave
-                    </Button> : 
+                    </Button> :
                     <Button
                         variant="contained"
-                        size="small" 
+                        size="small"
                         color="primary"
                         onClick={onJoinButtonClick}
                     >
@@ -87,7 +86,7 @@ function WishDetailPanel(props){
             <div style={{display: 'flex', justifyContent: 'center'}}>
                 <Button
                     variant="contained"
-                    size="small" 
+                    size="small"
                     color="primary"
                     onClick={onFinishButtonClick}
                 >
@@ -95,7 +94,7 @@ function WishDetailPanel(props){
                 </Button>
                 <Button
                     variant="outlined"
-                    size="small" 
+                    size="small"
                     color="primary"
                     onClick={onDropButtonClick}
                     style={{marginLeft: 40}}

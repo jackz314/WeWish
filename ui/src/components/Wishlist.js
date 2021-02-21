@@ -15,7 +15,7 @@ function WishList() {
           let response = await getWishes();
           setWishList(response)
       }
-      getList() 
+      getList()
   }
   ,[])
 
@@ -25,7 +25,7 @@ function WishList() {
         <AddWishPanel/>
         <div style={{display: 'flex', flexDirection: 'row'}}>
             <SelectWishPanel wishList={wishList} setTargetWish={setTargetWish}/>
-            {targetWish == "" ? null : <WishDetailPanel targetWish={targetWish} wishList={wishList}/>}
+            {targetWish === "" ? null : <WishDetailPanel targetWish={targetWish} wishList={wishList}/>}
         </div>
       </div>
     </Navigation>
