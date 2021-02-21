@@ -4,7 +4,7 @@ import { Button, Typography } from '@material-ui/core';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import SyncIcon from '@material-ui/icons/Sync';
 
-import  { joinWish, finishWish, leaveWish, delWish }from '../firebase'
+import  { joinWish, finishWish, leaveWish, delWish, addCompletedPost }from '../firebase'
 
 const useStyles = makeStyles({
     root: {
@@ -36,8 +36,8 @@ function WishDetailPanel(props){
     console.log(wish)
 
     const onFinishButtonClick = async() => {
-        console.log(wish.name)
         await finishWish(wish.name);
+        await addCompletedPost(wish.name)
     }
 
     const onDropButtonClick = async() => {
