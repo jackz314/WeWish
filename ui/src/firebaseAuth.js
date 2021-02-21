@@ -2,19 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase';
-
-// Configure Firebase.
-const firebaseConfig = {
-  apiKey: "AIzaSyDDnGW8SPLYZ_TgaYVXxkiX4rp6YnYbzEE",
-  authDomain: "wewish.firebaseapp.com",
-  projectId: "wewish",
-  storageBucket: "wewish.appspot.com",
-  messagingSenderId: "371870672394",
-  appId: "1:371870672394:web:a1609b47563393f5f7e1f3",
-  measurementId: "G-D7RQ2S0B8V"
-};
-
-firebase.initializeApp(firebaseConfig);
+import {addWish} from './firebase'
 
 // Configure FirebaseUI.
 const uiConfig = {
@@ -54,7 +42,8 @@ function SignInScreen() {
     <div>
       <h1>My App</h1>
       <p>Welcome {firebase.auth().currentUser.displayName}! You are now signed-in!</p>
-      <a onClick={() => firebase.auth().signOut()}>Sign-out</a>
+      <button onClick={() => firebase.auth().signOut()}>Sign-out</button>
+      <button onClick={()=>addWish("AAA", "BBB", 2)}>Add wish</button>
     </div>
   );
 }

@@ -23,9 +23,15 @@ const firebaseConfig = {
   measurementId: "G-D7RQ2S0B8V"
 };
 
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-firebase.analytics();
+export let firebaseApp;
+if (!firebase.apps.length) {
+  // Initialize Firebase
+  firebaseApp = firebase.initializeApp(firebaseConfig);
+  console.log(firebase.apps);
+  firebase.analytics();
+}else {
+  firebaseApp = firebase.app(); // if already initialized, use that one
+}
 
 const funcs = firebase.functions();
 
@@ -39,7 +45,6 @@ export let user = firebase.auth().currentUser;
 if(user === null){
   user = {uid: 'sample_user_1'}
 }
-
 
 const getUserWishRef = name => userColl.doc(user.uid).collection('wishes').doc(name);
 
