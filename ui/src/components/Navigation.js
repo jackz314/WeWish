@@ -23,7 +23,7 @@ const useStyles = makeStyles({
     backgroundColor: '#E76F51'
   },
   sidebarHeader: {
-    height: 60,
+    height: 150,
   },
   sidebarListItem: {
     height: 60,
@@ -31,6 +31,7 @@ const useStyles = makeStyles({
         backgroundColor: '#f1b9a8'
     },
     cursor: 'pointer',
+    paddingLeft: 45,
   },
   rightGrid: {
     height: '100%',

@@ -62,7 +62,7 @@ function WishListPanel(){
                 <div key={wish.name} className={classes.listItem}>
                     <div style={{display:'flex', alignItems: 'center'}}>
                         <Typography variant="h5">{wish.name}</Typography>
-                        {wish.completed_time == null ? <SyncIcon style={{color: '#0384fc'}}/> : <CheckCircleIcon style={{color: '##11ba5a'}}/>}
+                        {wish.complete_time == null ? <SyncIcon style={{color: '#0384fc'}}/> : <CheckCircleIcon style={{color: '#11ba5a'}}/>}
                     </div>
                     <Typography>{wish.start_time.getMonth()}-{wish.start_time.getDate()}-{wish.start_time.getFullYear()}</Typography>
                     { wish.difficulty === 1 ? <div className={classes.levelTag} style={{backgroundColor: 'rgb(32,171,51)'}}>
