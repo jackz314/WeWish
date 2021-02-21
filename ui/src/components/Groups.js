@@ -30,8 +30,9 @@ function Groups() {
       if(targetGroup !== ""){
         getPostList();
       }
-        
     }, [targetGroup])
+
+    console.log(groupPosts)
 
   return (
   <Navigation title="Groups">
