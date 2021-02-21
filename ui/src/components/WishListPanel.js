@@ -22,6 +22,17 @@ const useStyles = makeStyles({
     listItem: {
         border: '1px solid black',
         borderRadius: 8,
+        padding:8,
+        margin:10,
+        fontSize:24,
+    },
+    levelTag: {
+        display: 'inline',
+        marginRight: '8px',
+        padding: '2px 6px',
+        cursor: 'pointer',
+        color: "white",
+        borderRadius: 16,
     }
 })
 
@@ -46,16 +57,23 @@ function WishListPanel(){
         <div>
             {wishList.map(wish => (
                 <div key={wish.name} className={classes.listItem}>
-                    <div style={{display:'flex', alignItems: 'center', marginTop: 8, marginBottom: 8}}>
+                    <div style={{display:'flex', alignItems: 'center'}}>
                         <Typography variant="h5">{wish.name}</Typography>
                         {wish.completed_time == null ? <SyncIcon style={{color: '#0384fc'}}/> : <CheckCircleIcon style={{color: '##11ba5a'}}/>}
                     </div>
-                    {/* {wish.name}
-                    {wish.difficulty}
-                    {wish.desc}
-                    {wish.start_time}
-                    {wish.joined} */}
-                </div>
+                    <Typography>{wish.start_time.getMonth()}-{wish.start_time.getDate()}-{wish.start_time.getFullYear()}</Typography>
+                    { wish.difficulty === 1 ? <div className={classes.levelTag} style={{backgroundColor: 'rgb(32,171,51)'}}>
+                <Typography variant="caption">Easy</Typography>
+            </div>  : wish.difficulty === 2 ? <div className={classes.levelTag} style={{backgroundColor: 'rgb(247,157,22)'}}>
+                <Typography variant="caption">Medium</Typography>
+            </div>  : <div className={classes.levelTag} style={{backgroundColor: 'rgb(255,10,10)'}}>
+                <Typography variant="caption">Hard</Typography>
+            </div>}   
+             { wish.complete_time === null ? 
+                <Typography variant="caption">In Progress</Typography>
+            : <Typography variant="caption">Accomplished</Typography>
+            }  
+                     </div>
             ))}
         </div>
     </div>
