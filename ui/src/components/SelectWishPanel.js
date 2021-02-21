@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import  { getJoinedWishes }from '../firebase'
 
 const useStyles = makeStyles({
     root: {
         width: '100%',
         marginTop: 16,
-        marginLeft: 16,
         width: '40%',
         padding: 8,
         borderRadius: 8,
@@ -24,34 +22,34 @@ const useStyles = makeStyles({
     }
 })
 
-function GroupListPanel(){
+function SelectWishPanel(props){
     const classes = useStyles();
-    const [groupList, setGroupList] = useState([]);
+   
 
-    useEffect(()=>{
-        async function getList() {
-            let response = await getJoinedWishes();
-            setGroupList(response)
-        }
-        getList()  
+    const onWishClick = (name) => {
+        props.setTargetWish(name)
     }
-    ,[])
 
-    console.table(groupList)
     return (
     <div className={classes.root}>
         <div style={{marginBottom: 8}}>
-            <span className={classes.tag}>Groups</span>
+            <span className={classes.tag}>WishList</span>
         </div>
         <div>
-            {groupList.map(group => (
-                <div className={classes.listItem}>
-                    {group.name}
-                </div>
-            ))}
+            {props.wishList.length === 0 ? null : 
+                props.wishList.map(wish => (
+                    
+                    <div key={wish.name} 
+                        className={classes.listItem} 
+                        onClick={()=>onWishClick(wish.name)}
+                    >
+                        {wish.name}
+                    </div>
+                ))
+            }
         </div>
     </div>
     )
 }
 
-export default GroupListPanel;
+export default SelectWishPanel;
