@@ -61,7 +61,7 @@ function AddWishPanel(){
             <span className={classes.tag}>Make a wish</span>
         </div>
         <div className={classes.inputContainer} style={{marginBottom: 8}}>
-            <Typography variant="subtit1">What's your wish?</Typography>
+            <Typography variant="subtitle1">What's your wish?</Typography>
             <TextField 
                 className={classes.textField}
                 value={wishName}
@@ -70,7 +70,7 @@ function AddWishPanel(){
             />
         </div>
         <div className={classes.inputContainer} style={{marginBottom: 8}}>
-            <Typography variant="subtit1">How difficult is it?</Typography>
+            <Typography variant="subtitle1">How difficult is it?</Typography>
             <div className={classes.levelTag} 
                 style={{backgroundColor: wishLevel === 1 ? 'rgb(32,171,51)' : 'rgba(32,171,51,0.25)'}}
                 onClick={() => onLevelTagClick(1)}

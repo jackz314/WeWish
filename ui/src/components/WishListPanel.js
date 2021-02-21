@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import SyncIcon from '@material-ui/icons/Sync';
 import { Button, Typography } from '@material-ui/core';
 import  { getWishes }from '../firebase'
 
@@ -37,7 +39,6 @@ function WishListPanel(){
     }
     ,[])
 
-    console.table(wishList)
     return (
     <div className={classes.root}>
         <div style={{marginBottom: 8}}>
@@ -46,7 +47,10 @@ function WishListPanel(){
         <div>
             {wishList.map(wish => (
                 <div className={classes.listItem}>
-                    {wish.name}
+                    <div style={{display:'flex', alignItems: 'center', marginTop: 8, marginBottom: 8}}>
+                        <Typography variant="h5">{wish.name}</Typography>
+                        {wish.completed_time == null ? <SyncIcon style={{color: '#0384fc'}}/> : <CheckCircleIcon style={{color: '##11ba5a'}}/>}
+                    </div>
                 </div>
             ))}
         </div>
