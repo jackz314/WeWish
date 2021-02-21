@@ -89,7 +89,7 @@ function WishDetailPanel(props){
                     color="primary"
                     onClick={onFinishButtonClick}
                 >
-                    Accomplished
+                    Accomplish
                 </Button>
                 <Button
                     variant="outlined"

@@ -24,6 +24,7 @@ const useStyles = makeStyles({
         padding:8,
         margin:10,
         fontSize:24,
+        cursor: 'pointer'
     }
 })
 
