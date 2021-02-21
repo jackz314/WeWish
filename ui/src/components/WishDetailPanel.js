@@ -91,7 +91,7 @@ function WishDetailPanel(props){
                     onClick={onFinishButtonClick}
                     disabled={wish.complete_time != null}
                 >
-                    Accomplished
+                    Accomplish
                 </Button>
                 <Button
                     variant="outlined"
