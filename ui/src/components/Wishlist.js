@@ -1,9 +1,13 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-class Wishlist extends Component {
-  render() {
-    return <div>Wishlist</div>
-  }
+import Navigation from './Navigation'
+
+function WishList() {
+  return (
+    <Navigation title="WishList">
+      <div>WishList</div>
+    </Navigation>
+  )
 }
 
-export default Wishlist
+export default WishList;
