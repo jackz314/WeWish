@@ -111,14 +111,7 @@ export const addCompletedPost = async (wish) => {
   })
 }
 
-/*
- * Get all posts in the Wish group
- * return value:
- *
- */
-export const getPosts = async (wish) => {
-  console.log("getPosts")
-  const post = await wishColl.doc(wish).collection('posts').orderBy('time').get();
+function getPostObjects(post) {
   const post_list = [];
   post.forEach(async x => {
     var time = x.get("time").toDate()
@@ -128,6 +121,18 @@ export const getPosts = async (wish) => {
     var profile_pic = usrRef.get("profile_pic")
     post_list.unshift({"time": time, "text": text, "name": name, "profile_pic": profile_pic})
   })
+  return post_list;
+}
+
+/*
+ * Get all posts in the Wish group
+ * return value:
+ *
+ */
+export const getPosts = async (wish) => {
+  console.log("getPosts")
+  const post = await wishColl.doc(wish).collection('posts').orderBy('time').get();
+  const post_list = getPostObjects(post);
   console.log(post_list)
   return post_list
 }
@@ -159,6 +164,12 @@ export const setWishesChangeListener = async(listener) => {
 export const setJoinedWishesChangeListener = async(listener) => {
   userColl.doc(user.uid).collection("wishes").where('joined', '==', true).onSnapshot(async (snapshot) => {
     listener(await getWishObjects(snapshot));
+  });
+};
+
+export const setPostsChangeListener = async(wish, listener) => {
+  wishColl.doc(wish).collection('posts').orderBy('time').onSnapshot(async (snapshot) => {
+    listener(getPostObjects(snapshot));
   });
 };
 

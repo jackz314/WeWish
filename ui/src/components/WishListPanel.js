@@ -38,19 +38,23 @@ function WishListPanel(){
         getList()  
     }
     ,[])
-
     return (
     <div className={classes.root}>
         <div style={{marginBottom: 8}}>
             <span className={classes.tag}>WishList</span>
         </div>
         <div>
-            {wishList.map(wish => (
+            {wishlist.map(wish => (
                 <div className={classes.listItem}>
                     <div style={{display:'flex', alignItems: 'center', marginTop: 8, marginBottom: 8}}>
                         <Typography variant="h5">{wish.name}</Typography>
                         {wish.completed_time == null ? <SyncIcon style={{color: '#0384fc'}}/> : <CheckCircleIcon style={{color: '##11ba5a'}}/>}
                     </div>
+                    {wish.name}
+                    {wish.difficulty}
+                    {wish.desc}
+                    {wish.start_time}
+                    {wish.joined}
                 </div>
             ))}
         </div>
