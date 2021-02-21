@@ -9,6 +9,7 @@ import "firebase/analytics";
 // Add the Firebase products that you want to use
 import "firebase/auth";
 import "firebase/firestore";
+import "firebase/functions";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -25,11 +26,63 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
-const db = firebase.firestore();
-var user = firebase.auth().currentUser;
 
-const addWish = (name) => {
-  
+const funcs = firebase.functions();
+
+const db = firebase.firestore();
+const userColl = db.collection('users');
+const wishColl = db.collection('wishes');
+
+let user = firebase.auth().currentUser;
+
+// test mode
+if(user === null){
+  user = {uid: 'sample_user_1'}
 }
 
-export default fb;
+const getUserWishRef = name => userColl.doc(user.uid).collection('wishes').doc(name);
+
+export const addWish = async(name, description, difficulty) => {
+  console.log("Adding wish...", name);
+  await funcs.httpsCallable("addWish")({
+    name: name, desc: description, difficulty: difficulty
+  });
+};
+
+export const delWish = async(name) => {
+  await funcs.httpsCallable("delWish")({name: name});
+};
+
+// data is a dictionary of fields to update
+export const updateWish = async(name, data) => {
+  await wishColl.doc(name).update(data);
+};
+
+//list of wish objects
+export const getWishes = async() => {
+  const snapshot = await userColl.doc(user.uid).collection("wishes").get();
+  let documentData = await Promise.all(snapshot.docs.map(async doc => {
+    const data = doc.data();
+    data.ref = (await data.ref.get()).data();
+    return data;
+  }));
+  console.log(documentData);
+  return documentData;
+};
+
+export const joinWish = async(name) => {
+  const batch = db.batch();
+  await batch.update(getUserWishRef(name), {joined: true})
+    .update(wishColl.doc(name), {
+      curr_user: firebase.firestore.FieldValue.increment(1),
+      in_progress_user: firebase.firestore.FieldValue.increment(1),
+    }).commit();
+};
+
+export const leaveWish = async(name) => {
+  await funcs.httpsCallable("leaveWish")({name: name});
+};
+
+export const finishWish = async(name) => {
+  await funcs.httpsCallable("finishWish")({name: name});
+};
