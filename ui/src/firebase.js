@@ -39,22 +39,45 @@ const db = firebase.firestore();
 const userColl = db.collection('users');
 const wishColl = db.collection('wishes');
 
-export let user = firebase.auth().currentUser;
+let user = firebase.auth().currentUser;
 
-// test mode
-if(user === null){
-  user = {uid: 'sample_user_1'}
+const waitForUser = async() => {
+  if(user === null || user.uid === 'sample_user_1'){
+    return new Promise((resolve) => {
+      firebase.auth().onAuthStateChanged(u => {
+        console.log("auth state changed wait", u.uid);
+        user = u;
+        if(user === null){
+          user = {uid: 'sample_user_1'}
+        }
+        resolve();
+      })
+    });
+  }else{
+    return;
+  }
 }
 
 //listen for user changes
 firebase.auth().onAuthStateChanged(u => {
+  console.log("auth state changed", u.uid);
   user = u;
   if(user === null){
     user = {uid: 'sample_user_1'}
   }
 })
 
+// test mode
+if(user === null){
+  user = {uid: 'sample_user_1'}
+}
+
 const getUserWishRef = name => userColl.doc(user.uid).collection('wishes').doc(name);
+
+export const getUser = async() => {
+  await waitForUser();
+  return user;
+}
 
 export const addWish = async(name, description, difficulty) => {
   console.log("Adding wish...", name, description, difficulty);
@@ -74,24 +97,28 @@ export const updateWish = async(name, data) => {
 
 //list of wish objects
 export const getWishes = async() => {
-  console.log("Getting wishes:", user.uid);
+  const res = await waitForUser();
+  console.log("Getting wishes:", user.uid, res);
   const snapshot = await userColl.doc(user.uid).collection("wishes").get();
   return await getWishObjects(snapshot);
 };
 
 //list of joined wish objects
 export const getJoinedWishes = async() => {
+  await waitForUser();
   const snapshot = await userColl.doc(user.uid).collection("wishes").where('joined', '==', true).get();
   return await getWishObjects(snapshot);
 };
 
 //list of unjoined wish objects
 export const getUnjoinedWishes = async() => {
+  await waitForUser();
   const snapshot = await userColl.doc(user.uid).collection("wishes").where('joined', '==', false).get();
   return await getWishObjects(snapshot);
 };
 
 export const joinWish = async(name) => {
+  await waitForUser();
   const batch = db.batch();
   await batch.update(getUserWishRef(name), {joined: true})
     .update(wishColl.doc(name), {
@@ -101,16 +128,19 @@ export const joinWish = async(name) => {
 };
 
 export const leaveWish = async(name) => {
+  await waitForUser();
   await funcs.httpsCallable("leaveWish")({name: name});
 };
 
 export const finishWish = async(name) => {
+  await waitForUser();
   console.log("Finishing wish:", user.uid);
   await funcs.httpsCallable("finishWish")({name: name});
 };
 
 // add Accomplishment post
 export const addCompletedPost = async (wish) => {
+  await waitForUser();
   console.log("addCompletedPost")
   var usr = userColl.doc(user.uid)
   wishColl.doc(wish).collection('posts').add({
@@ -140,6 +170,7 @@ function getPostObjects(post) {
  *
  */
 export const getPosts = async (wish) => {
+  await waitForUser();
   console.log("getPosts")
   const post = await wishColl.doc(wish).collection('posts').orderBy('time').get();
   const post_list = getPostObjects(post);
@@ -152,6 +183,7 @@ export const getPosts = async (wish) => {
  * [ groupName ]
  */
 export const recommendWishes = async (input) => {
+  await waitForUser();
   console.log("recommendWishes")
   const wishes = await wishColl.get();
   const recommendation = [];
@@ -166,18 +198,21 @@ export const recommendWishes = async (input) => {
 }
 
 export const setWishesChangeListener = async(listener) => {
+  await waitForUser();
   userColl.doc(user.uid).collection("wishes").onSnapshot(async (snapshot) => {
     listener(await getWishObjects(snapshot));
   });
 };
 
 export const setJoinedWishesChangeListener = async(listener) => {
+  await waitForUser();
   userColl.doc(user.uid).collection("wishes").where('joined', '==', true).onSnapshot(async (snapshot) => {
     listener(await getWishObjects(snapshot));
   });
 };
 
 export const setPostsChangeListener = async(wish, listener) => {
+  await waitForUser();
   wishColl.doc(wish).collection('posts').orderBy('time').onSnapshot(async (snapshot) => {
     listener(getPostObjects(snapshot));
   });
