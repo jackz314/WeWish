@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { ListItem, Typography } from '@material-ui/core';
 import firebase from 'firebase';
+import {user} from '../firebase';
 
 const useStyles = makeStyles({
   root: {
@@ -46,10 +47,17 @@ const useStyles = makeStyles({
     padding: 16,
     backgroundColor: '#f0f0f0',
   },
+  profilePic: {
+    position:'absolute',
+    right: 0,
+    padding: 10,
+  },
 });
 
 function Navigation(props){
     const classes = useStyles();
+
+    console.log(user);
 
     const renderSidebar = () => {
         return (
@@ -111,6 +119,14 @@ function Navigation(props){
                     }}>
                     {props.title}
                 </Typography>
+                <div className={classes.profilePic}>
+                    
+                    <img 
+                          src={user.photoURL}
+                          alt="new"
+                          style={{height: '40px'}}
+                          />
+                </div>
             </div>
             <div className={classes.content}>
                 {props.children}
