@@ -23,7 +23,10 @@ const useStyles = makeStyles({
     backgroundColor: '#E76F51'
   },
   sidebarHeader: {
-    height: 150,
+    height: 72,
+    display: "flex",
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   sidebarListItem: {
     height: 60,
@@ -75,7 +78,9 @@ function Navigation(props){
     const renderSidebar = () => {
         return (
             <div className={classes.sidebar}>
-                <div className={classes.sidebarHeader}/>
+                <div className={classes.sidebarHeader}>
+                    <span style={{fontFamily: 'Impact', fontSize: 40, color: "white"}}>WeWish</span>
+                </div>
                 <div className={classes.sidebarBody}>
                     <ListItem
                         component={Link}
