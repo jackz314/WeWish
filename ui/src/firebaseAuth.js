@@ -4,6 +4,7 @@ import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase';
 import {addWish} from './firebase'
 import {useHistory} from 'react-router-dom'
+import SignInPage from './components/SignInPage'
 
 // Configure FirebaseUI.
 const uiConfig = {
@@ -37,12 +38,10 @@ function SignInScreen() {
 
   if (!isSignedIn) {
     return (
-      <div>
-        <h1>WeWish</h1>
-        <p>Please sign-in:</p>
+      <SignInPage>
         <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
-      </div>
-    );
+      </SignInPage>
+    )
   }
   
   return (
