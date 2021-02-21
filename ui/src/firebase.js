@@ -67,27 +67,19 @@ export const updateWish = async(name, data) => {
 //list of wish objects
 export const getWishes = async() => {
   const snapshot = await userColl.doc(user.uid).collection("wishes").get();
-  let documentData = await Promise.all(snapshot.docs.map(async doc => {
-    const data = doc.data();
-    data.name = doc.id;
-    data.ref = (await data.ref.get()).data();
-    return data;
-  }));
-  console.log(documentData);
-  return documentData;
+  return await getWishObjects(snapshot);
 };
 
 //list of joined wish objects
 export const getJoinedWishes = async() => {
   const snapshot = await userColl.doc(user.uid).collection("wishes").where('joined', '==', true).get();
-  let documentData = await Promise.all(snapshot.docs.map(async doc => {
-    const data = doc.data();
-    data.name = doc.id;
-    data.ref = (await data.ref.get()).data();
-    return data;
-  }));
-  console.log(documentData);
-  return documentData;
+  return await getWishObjects(snapshot);
+};
+
+//list of unjoined wish objects
+export const getUnjoinedWishes = async() => {
+  const snapshot = await userColl.doc(user.uid).collection("wishes").where('joined', '==', false).get();
+  return await getWishObjects(snapshot);
 };
 
 export const joinWish = async(name) => {
@@ -122,12 +114,12 @@ export const addCompletedPost = async (wish) => {
 /*
  * Get all posts in the Wish group
  * return value:
- * [{time: , name: , profile_pic: , text: }]
+ *
  */
 export const getPosts = async (wish) => {
   console.log("getPosts")
-  var post = await wishColl.doc(wish).collection('posts').orderBy('time').get()
-  var post_list = []
+  const post = await wishColl.doc(wish).collection('posts').orderBy('time').get();
+  const post_list = [];
   post.forEach(async x => {
     var time = x.get("time").toDate()
     var text = x.get("text")
@@ -146,27 +138,27 @@ export const getPosts = async (wish) => {
  */
 export const recommendWishes = async (input) => {
   console.log("recommendWishes")
-  var wishes = await wishColl.get()
-  var recommendation = []
+  const wishes = await wishColl.get();
+  const recommendation = [];
   wishes.forEach(x => {
     // console.log(x.id, '=>', x.data())
-    var reg = new RegExp("\\b"+input+"\\b");
-    var matched = x.id.match(reg)
+    const reg = new RegExp("\\b" + input + "\\b");
+    const matched = x.id.match(reg);
     if (matched != null) recommendation.push(matched.input)
     console.log(recommendation)
   })
   return recommendation
 }
 
-//list of unjoined wish objects
-export const getUnjoinedWishes = async() => {
-  const snapshot = await userColl.doc(user.uid).collection("wishes").where('joined', '==', false).get();
+async function getWishObjects(snapshot) {
   let documentData = await Promise.all(snapshot.docs.map(async doc => {
     const data = doc.data();
     data.name = doc.id;
     data.ref = (await data.ref.get()).data();
+    if (data.complete_time) data.complete_time = data.complete_time.toDate();
+    data.start_time = data.start_time.toDate();
     return data;
   }));
   console.log(documentData);
   return documentData;
-};
+}
