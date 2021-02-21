@@ -25,7 +25,7 @@ function Groups() {
       async function getPostList(){
         let res = await getPosts(targetGroup);
         setGroupPosts(res)
-        console.log(res)
+        console.log("setting", res)
       }
       if(targetGroup !== ""){
         getPostList();

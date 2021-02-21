@@ -26,7 +26,7 @@ const useStyles = makeStyles({
 
 function GroupPostPanel(props){
     const classes = useStyles();
-
+    console.log(props)
     return (
     <div className={classes.root}>
         <div style={{marginBottom: 8}}>
