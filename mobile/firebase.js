@@ -49,7 +49,7 @@ if(user === null){
 const getUserWishRef = name => userColl.doc(user.uid).collection('wishes').doc(name);
 
 export const addWish = async(name, description, difficulty) => {
-  console.log("Adding wish...", name);
+  console.log("Adding wish...", name, description, difficulty);
   await funcs.httpsCallable("addWish")({
     name: name, desc: description, difficulty: difficulty
   });
@@ -67,25 +67,19 @@ export const updateWish = async(name, data) => {
 //list of wish objects
 export const getWishes = async() => {
   const snapshot = await userColl.doc(user.uid).collection("wishes").get();
-  let documentData = await Promise.all(snapshot.docs.map(async doc => {
-    const data = doc.data();
-    data.ref = (await data.ref.get()).data();
-    return data;
-  }));
-  console.log(documentData);
-  return documentData;
+  return await getWishObjects(snapshot);
 };
 
 //list of joined wish objects
 export const getJoinedWishes = async() => {
   const snapshot = await userColl.doc(user.uid).collection("wishes").where('joined', '==', true).get();
-  let documentData = await Promise.all(snapshot.docs.map(async doc => {
-    const data = doc.data();
-    data.ref = (await data.ref.get()).data();
-    return data;
-  }));
-  console.log(documentData);
-  return documentData;
+  return await getWishObjects(snapshot);
+};
+
+//list of unjoined wish objects
+export const getUnjoinedWishes = async() => {
+  const snapshot = await userColl.doc(user.uid).collection("wishes").where('joined', '==', false).get();
+  return await getWishObjects(snapshot);
 };
 
 export const joinWish = async(name) => {
@@ -117,15 +111,8 @@ export const addCompletedPost = async (wish) => {
   })
 }
 
-/*
- * Get all posts in the Wish group
- * return value:
- * [{time: , name: , profile_pic: , text: }]
- */
-export const getPosts = async (wish) => {
-  console.log("getPosts")
-  var post = await wishColl.doc(wish).collection('posts').orderBy('time').get()
-  var post_list = []
+function getPostObjects(post) {
+  const post_list = [];
   post.forEach(async x => {
     var time = x.get("time").toDate()
     var text = x.get("text")
@@ -134,6 +121,67 @@ export const getPosts = async (wish) => {
     var profile_pic = usrRef.get("profile_pic")
     post_list.unshift({"time": time, "text": text, "name": name, "profile_pic": profile_pic})
   })
+  return post_list;
+}
+
+/*
+ * Get all posts in the Wish group
+ * return value:
+ *
+ */
+export const getPosts = async (wish) => {
+  console.log("getPosts")
+  const post = await wishColl.doc(wish).collection('posts').orderBy('time').get();
+  const post_list = getPostObjects(post);
   console.log(post_list)
   return post_list
+}
+
+/*
+ * return value:
+ * [ groupName ]
+ */
+export const recommendWishes = async (input) => {
+  console.log("recommendWishes")
+  const wishes = await wishColl.get();
+  const recommendation = [];
+  wishes.forEach(x => {
+    // console.log(x.id, '=>', x.data())
+    const reg = new RegExp("\\b" + input + "\\b");
+    const matched = x.id.match(reg);
+    if (matched != null) recommendation.push(matched.input)
+    console.log(recommendation)
+  })
+  return recommendation
+}
+
+export const setWishesChangeListener = async(listener) => {
+  userColl.doc(user.uid).collection("wishes").onSnapshot(async (snapshot) => {
+    listener(await getWishObjects(snapshot));
+  });
+};
+
+export const setJoinedWishesChangeListener = async(listener) => {
+  userColl.doc(user.uid).collection("wishes").where('joined', '==', true).onSnapshot(async (snapshot) => {
+    listener(await getWishObjects(snapshot));
+  });
+};
+
+export const setPostsChangeListener = async(wish, listener) => {
+  wishColl.doc(wish).collection('posts').orderBy('time').onSnapshot(async (snapshot) => {
+    listener(getPostObjects(snapshot));
+  });
+};
+
+async function getWishObjects(snapshot) {
+  let documentData = await Promise.all(snapshot.docs.map(async doc => {
+    const data = doc.data();
+    data.name = doc.id;
+    data.ref = (await data.ref.get()).data();
+    if (data.complete_time) data.complete_time = data.complete_time.toDate();
+    data.start_time = data.start_time.toDate();
+    return data;
+  }));
+  console.log(documentData);
+  return documentData;
 }

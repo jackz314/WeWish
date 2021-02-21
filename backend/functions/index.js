@@ -30,11 +30,11 @@ exports.addWish = functions.https.onCall(async (data, context) => {
       "one arguments \"name\" containing the wish name.");
   }
   // Checking that the user is authenticated.
-  if (!context.auth) {
-    // Throwing an HttpsError so that the client gets the error details.
-    throw new functions.https.HttpsError("failed-precondition", "The function must be called " +
-      "while authenticated.");
-  }
+  // if (!context.auth) {
+  //   // Throwing an HttpsError so that the client gets the error details.
+  //   throw new functions.https.HttpsError("failed-precondition", "The function must be called " +
+  //     "while authenticated.");
+  // }
 
   const wishRef = db.collection("wishes").doc(data.name);
 
@@ -47,7 +47,7 @@ exports.addWish = functions.https.onCall(async (data, context) => {
     });
   }
 
-  const uid = context.auth.uid;
+  const uid = context.auth ? context.auth.uid : "sample_user_1";
   const userWishesColl = db.collection("users").doc(uid).collection("wishes");
   await userWishesColl.doc(data.name).set({
     complete_time: null,
