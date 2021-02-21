@@ -120,12 +120,7 @@ export const getUnjoinedWishes = async() => {
 
 export const joinWish = async(name) => {
   await waitForUser();
-  const batch = db.batch();
-  await batch.update(getUserWishRef(name), {joined: true})
-    .update(wishColl.doc(name), {
-      curr_users: firebase.firestore.FieldValue.increment(1),
-      in_progress_users: firebase.firestore.FieldValue.increment(1),
-    }).commit();
+  await funcs.httpsCallable("joinWish")({name: name});
 };
 
 export const leaveWish = async(name) => {
