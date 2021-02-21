@@ -46,6 +46,14 @@ if(user === null){
   user = {uid: 'sample_user_1'}
 }
 
+//listen for user changes
+firebase.auth().onAuthStateChanged(u => {
+  user = u;
+  if(user === null){
+    user = {uid: 'sample_user_1'}
+  }
+})
+
 const getUserWishRef = name => userColl.doc(user.uid).collection('wishes').doc(name);
 
 export const addWish = async(name, description, difficulty) => {
@@ -66,6 +74,7 @@ export const updateWish = async(name, data) => {
 
 //list of wish objects
 export const getWishes = async() => {
+  console.log("Getting wishes:", user.uid);
   const snapshot = await userColl.doc(user.uid).collection("wishes").get();
   return await getWishObjects(snapshot);
 };
@@ -96,6 +105,7 @@ export const leaveWish = async(name) => {
 };
 
 export const finishWish = async(name) => {
+  console.log("Finishing wish:", user.uid);
   await funcs.httpsCallable("finishWish")({name: name});
 };
 
