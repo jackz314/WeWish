@@ -4,7 +4,7 @@ import firebase from "firebase/app";
 // import * as firebase from "firebase/app"
 
 // If you enabled Analytics in your project, add the Firebase SDK for Analytics
-import "firebase/analytics";
+// import "firebase/analytics";
 
 // Add the Firebase products that you want to use
 import "firebase/auth";
@@ -28,7 +28,7 @@ if (!firebase.apps.length) {
   // Initialize Firebase
   firebaseApp = firebase.initializeApp(firebaseConfig);
   console.log(firebase.apps);
-  firebase.analytics();
+  // firebase.analytics();
 }else {
   firebaseApp = firebase.app(); // if already initialized, use that one
 }
