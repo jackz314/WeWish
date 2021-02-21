@@ -55,6 +55,7 @@ function SelectWishPanel(props){
                     <div key={wish.name} 
                         className={classes.listItem} 
                         onClick={()=>onWishClick(wish.name)}
+                        style={wish.name === props.targetWish ? {backgroundColor: '#e0e0e0'}: null}
                     >
                         {wish.name}
 

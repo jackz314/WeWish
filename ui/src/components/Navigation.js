@@ -48,6 +48,7 @@ const useStyles = makeStyles({
     flex: 1,
     padding: 16,
     backgroundColor: '#f0f0f0',
+    overflow: 'auto'
   },
   profilePic: {
     position:'absolute',

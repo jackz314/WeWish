@@ -30,7 +30,7 @@ function WishList() {
       <div>
         <AddWishPanel/>
         <div style={{display: 'flex', flexDirection: 'row'}}>
-            <SelectWishPanel wishList={wishList} setTargetWish={setTargetWish}/>
+            <SelectWishPanel wishList={wishList} setTargetWish={setTargetWish} targetWish={targetWish}/>
             {targetWish === "" ? null : <WishDetailPanel targetWish={targetWish} wishList={wishList} setTargetWish={setTargetWish}/>}
         </div>
       </div>

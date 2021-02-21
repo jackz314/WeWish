@@ -42,7 +42,9 @@ function SelectGroupPanel(props){
         </div>
         <div>
             {props.groupList.map((group, i) => (
-                <div key={i}  className={classes.listItem} onClick={() => onGroupClick(group.name)}>
+                <div key={i}  className={classes.listItem} onClick={() => onGroupClick(group.name)}
+                    style={props.targetGroup === group.name ? {backgroundColor: "#e0e0e0"} : null}
+                >
                     {group.name}
                     <Typography>Group members: {group.ref.curr_users}</Typography>
                     <Typography>Finished members: {group.ref.finished_users}</Typography>
