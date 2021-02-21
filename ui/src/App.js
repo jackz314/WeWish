@@ -9,7 +9,7 @@ import SignInScreen from './firebaseAuth'
 
 function App(){
   return (
-    <div style={{height: "100%", border: '1px solid red'}}>
+    <div style={{height: "100%"}}>
       <BrowserRouter>
         <Switch>
           <Route exact path='/' component={Dashboard} />

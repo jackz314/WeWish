@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase';
 import {addWish} from './firebase'
+import {useHistory} from 'react-router-dom'
 
 // Configure FirebaseUI.
 const uiConfig = {
@@ -29,6 +30,8 @@ function SignInScreen() {
     return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
   }, []);
 
+  const history = useHistory();
+
   if (!isSignedIn) {
     return (
       <div>
@@ -38,6 +41,9 @@ function SignInScreen() {
       </div>
     );
   }
+
+  history.push('/');
+  
   return (
     <div>
       <h1>My App</h1>
