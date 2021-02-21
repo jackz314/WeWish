@@ -139,3 +139,34 @@ export const getPosts = async (wish) => {
   console.log(post_list)
   return post_list
 }
+
+/*
+ * return value:
+ * [ groupName ]
+ */
+export const recommendWishes = async (input) => {
+  console.log("recommendWishes")
+  var wishes = await wishColl.get()
+  var recommendation = []
+  wishes.forEach(x => {
+    // console.log(x.id, '=>', x.data())
+    var reg = new RegExp("\\b"+input+"\\b");
+    var matched = x.id.match(reg)
+    if (matched != null) recommendation.push(matched.input)
+    console.log(recommendation)
+  })
+  return recommendation
+}
+
+//list of unjoined wish objects
+export const getUnjoinedWishes = async() => {
+  const snapshot = await userColl.doc(user.uid).collection("wishes").where('joined', '==', false).get();
+  let documentData = await Promise.all(snapshot.docs.map(async doc => {
+    const data = doc.data();
+    data.name = doc.id;
+    data.ref = (await data.ref.get()).data();
+    return data;
+  }));
+  console.log(documentData);
+  return documentData;
+};
