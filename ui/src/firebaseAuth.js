@@ -4,12 +4,17 @@ import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase';
 
 // Configure Firebase.
-const config = {
-  apiKey: 'AIzaSyAeue-AsYu76MMQlTOM-KlbYBlusW9c1FM',
-  authDomain: 'myproject-1234.firebaseapp.com',
-  // ...
+const firebaseConfig = {
+  apiKey: "AIzaSyDDnGW8SPLYZ_TgaYVXxkiX4rp6YnYbzEE",
+  authDomain: "wewish.firebaseapp.com",
+  projectId: "wewish",
+  storageBucket: "wewish.appspot.com",
+  messagingSenderId: "371870672394",
+  appId: "1:371870672394:web:a1609b47563393f5f7e1f3",
+  measurementId: "G-D7RQ2S0B8V"
 };
-firebase.initializeApp(config);
+
+firebase.initializeApp(firebaseConfig);
 
 // Configure FirebaseUI.
 const uiConfig = {
