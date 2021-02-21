@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'; 
 import { makeStyles } from '@material-ui/core/styles';
 import { ListItem, Typography } from '@material-ui/core';
+import firebase from 'firebase';
 
 const useStyles = makeStyles({
   root: {
@@ -79,6 +80,16 @@ function Navigation(props){
                     >
                         <Typography variant="h6" style={{color: 'white'}}>
                             Groups
+                        </Typography>
+                    </ListItem>
+                    <ListItem
+                        className={classes.sidebarListItem}
+                        component={Link}
+                        to="/login"
+                        onClick={() => firebase.auth().signOut()}
+                    >
+                        <Typography variant="h6" style={{color: 'white'}}>
+                            Log Out
                         </Typography>
                     </ListItem>
                 </div>
