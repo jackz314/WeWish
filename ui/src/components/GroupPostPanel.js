@@ -6,6 +6,7 @@ const useStyles = makeStyles({
     root: {
         width: '100%',
         marginTop: 16,
+        marginLeft: 16,
         width: '40%',
         padding: 8,
         borderRadius: 8,
@@ -23,27 +24,23 @@ const useStyles = makeStyles({
     }
 })
 
-function SelectGroupPanel(props){
+function GroupPostPanel(props){
     const classes = useStyles();
 
-    const onGroupClick = (name) => {
-        props.setTargetGroup(name)
-    }
-    
+    console.log(props.groupPosts)
     return (
     <div className={classes.root}>
         <div style={{marginBottom: 8}}>
-            <span className={classes.tag}>Groups</span>
+            <span className={classes.tag}>Group Post</span>
         </div>
         <div>
-            {props.groupList.map(group => (
-                <div className={classes.listItem} onClick={onGroupClick}>
-                    {group.name}
+            {/* {props.postList.map(post => (
+                <div className={classes.listItem}>
                 </div>
-            ))}
+            ))} */}
         </div>
     </div>
     )
 }
 
-export default SelectGroupPanel;
+export default GroupPostPanel;
