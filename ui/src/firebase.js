@@ -45,7 +45,7 @@ const waitForUser = async() => {
   if(user === null || user.uid === 'sample_user_1'){
     return new Promise((resolve) => {
       firebase.auth().onAuthStateChanged(u => {
-        console.log("auth state changed wait", u.uid);
+        console.log("auth state changed wait", u ? null : u.uid);
         user = u;
         if(user === null){
           user = {uid: 'sample_user_1'}
@@ -123,8 +123,8 @@ export const joinWish = async(name) => {
   const batch = db.batch();
   await batch.update(getUserWishRef(name), {joined: true})
     .update(wishColl.doc(name), {
-      curr_user: firebase.firestore.FieldValue.increment(1),
-      in_progress_user: firebase.firestore.FieldValue.increment(1),
+      curr_users: firebase.firestore.FieldValue.increment(1),
+      in_progress_users: firebase.firestore.FieldValue.increment(1),
     }).commit();
 };
 
@@ -186,7 +186,7 @@ export const getPosts = async (wish) => {
  */
 export const recommendWishes = async (input) => {
   await waitForUser();
-  console.log("recommendWishes")
+  console.log("recommendWishes", input)
   const wishes = await wishColl.get();
   const recommendation = [];
   wishes.forEach(x => {
