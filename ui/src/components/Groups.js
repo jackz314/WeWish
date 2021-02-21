@@ -40,7 +40,7 @@ function Groups() {
       <AddWishPanel/>
       <div style={{display: 'flex', flexDirection: 'row'}}>
         <SelectGroupPanel groupList={groupList} setTargetGroup={setTargetGroup} targetGroup={targetGroup}/>
-        <GroupPostPanel groupPosts={groupPosts} targetGroup={targetGroup}/>
+        {groupPosts.length === 0 ? null : <GroupPostPanel groupPosts={groupPosts} targetGroup={targetGroup}/>}
       </div>
     </div>
   </Navigation>
