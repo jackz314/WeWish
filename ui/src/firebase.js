@@ -33,7 +33,7 @@ const db = firebase.firestore();
 const userColl = db.collection('users');
 const wishColl = db.collection('wishes');
 
-let user = firebase.auth().currentUser;
+export let user = firebase.auth().currentUser;
 
 // test mode
 if(user === null){
@@ -61,6 +61,18 @@ export const updateWish = async(name, data) => {
 //list of wish objects
 export const getWishes = async() => {
   const snapshot = await userColl.doc(user.uid).collection("wishes").get();
+  let documentData = await Promise.all(snapshot.docs.map(async doc => {
+    const data = doc.data();
+    data.ref = (await data.ref.get()).data();
+    return data;
+  }));
+  console.log(documentData);
+  return documentData;
+};
+
+//list of joined wish objects
+export const getJoinedWishes = async() => {
+  const snapshot = await userColl.doc(user.uid).collection("wishes").where('joined', '==', true).get();
   let documentData = await Promise.all(snapshot.docs.map(async doc => {
     const data = doc.data();
     data.ref = (await data.ref.get()).data();
