@@ -12,10 +12,7 @@ const uiConfig = {
   signInOptions: [
     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
   ],
-  callbacks: {
-    // Avoid redirects after sign-in.
-    signInSuccessWithAuthResult: () => false,
-  },
+  signInSuccessUrl: '/',
 };
 
 function SignInScreen() {
@@ -32,7 +29,7 @@ function SignInScreen() {
   if (!isSignedIn) {
     return (
       <div>
-        <h1>My App</h1>
+        <h1>WeWish</h1>
         <p>Please sign-in:</p>
         <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
       </div>
@@ -40,7 +37,7 @@ function SignInScreen() {
   }
   return (
     <div>
-      <h1>My App</h1>
+      <h1>WeWish</h1>
       <p>Welcome {firebase.auth().currentUser.displayName}! You are now signed-in!</p>
       <button onClick={() => firebase.auth().signOut()}>Sign-out</button>
       <button onClick={()=>addWish("AAA", "BBB", 2)}>Add wish</button>
