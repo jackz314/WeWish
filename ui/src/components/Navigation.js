@@ -20,7 +20,7 @@ const useStyles = makeStyles({
     backgroundColor: '#E76F51'
   },
   sidebarHeader: {
-      height: 60,
+    height: 60,
   },
   sidebarListItem: {
     height: 60,
