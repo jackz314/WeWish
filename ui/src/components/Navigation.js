@@ -1,9 +1,10 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
+
 import { Link } from 'react-router-dom'; 
 import { makeStyles } from '@material-ui/core/styles';
 import { ListItem, Typography } from '@material-ui/core';
 import firebase from 'firebase';
-import {user} from '../firebase';
+import {getUser} from '../firebase';
 
 const useStyles = makeStyles({
   root: {
@@ -56,8 +57,15 @@ const useStyles = makeStyles({
 
 function Navigation(props){
     const classes = useStyles();
-
-    console.log(user);
+    const [user, setUser] = useState({});
+    useEffect(()=>{
+        async function get() {
+            let user = await getUser();
+            setUser(user)
+        }
+        get() 
+    }
+    ,[])
 
     const renderSidebar = () => {
         return (
