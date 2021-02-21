@@ -40,6 +40,7 @@ if(user === null){
   user = {uid: 'sample_user_1'}
 }
 
+
 const getUserWishRef = name => userColl.doc(user.uid).collection('wishes').doc(name);
 
 export const addWish = async(name, description, difficulty) => {
@@ -86,3 +87,36 @@ export const leaveWish = async(name) => {
 export const finishWish = async(name) => {
   await funcs.httpsCallable("finishWish")({name: name});
 };
+
+// add Accomplishment post
+export const addCompletedPost = async (wish) => {
+  console.log("addCompletedPost")
+  var usr = userColl.doc(user.uid)
+  wishColl.doc(wish).collection('posts').add({
+    title: "",
+    text: "I accomplished this!",
+    time: firebase.firestore.FieldValue.serverTimestamp(),
+    user: usr
+  })
+}
+
+/*
+ * Get all posts in the Wish group
+ * return value:
+ * [{time: , name: , profile_pic: , text: }]
+ */
+export const getPosts = async (wish) => {
+  console.log("getPosts")
+  var post = await wishColl.doc(wish).collection('posts').orderBy('time').get()
+  var post_list = []
+  post.forEach(async x => {
+    var time = x.get("time").toDate()
+    var text = x.get("text")
+    var usrRef = await x.get("user").get()
+    var name = usrRef.get("name")
+    var profile_pic = usrRef.get("profile_pic")
+    post_list.unshift({"time": time, "text": text, "name": name, "profile_pic": profile_pic})
+  })
+  console.log(post_list)
+  return post_list
+}
